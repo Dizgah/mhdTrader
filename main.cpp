@@ -129,7 +129,6 @@ public:
     {
         context_ptr ctx = websocketpp::lib::make_shared<boost::asio::ssl::context>(boost::asio::ssl::context::sslv23);
 
-
         try
         {
             ctx->set_options(boost::asio::ssl::context::default_workarounds |
