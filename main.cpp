@@ -341,13 +341,12 @@ private:
 
 int main(int argc, char* argv[])
 {
-    std::string                 uri = URI;
-    std::unique_ptr<WsHandler>  ws(new WsHandler);
-
-
     GumboOutput* output = gumbo_parse("<h1>Hello, World!</h1>");
     // Do stuff with output->root
     gumbo_destroy_output(&kGumboDefaultOptions, output);
+
+    std::string                 uri = URI;
+    std::unique_ptr<WsHandler>  ws(new WsHandler);
 
     try
     {

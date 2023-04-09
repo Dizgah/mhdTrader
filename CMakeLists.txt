@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.5)
 
-project( mhdTrader LANGUAGES CXX)
+project( mhdTrader LANGUAGES C CXX)
 
 set( CMAKE_CXX_STANDARD 17)
 set( CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,25 +30,23 @@ include_directories( ${Boost_INCLUDE_DIR})
 include_directories( ${OPENSSL_INCLUDE_DIR})
 
 set( GUMBO_PARSER_SRC
-    "${GUMBO_PARSER}/attribute.c"
-    "${GUMBO_PARSER}/char_ref.c"
-    "${GUMBO_PARSER}/error.c"
-    "${GUMBO_PARSER}/parser.c"
-    "${GUMBO_PARSER}/string_buffer.c"
-    "${GUMBO_PARSER}/string_piece.c"
-    "${GUMBO_PARSER}/tag.c"
-    "${GUMBO_PARSER}/tokenizer.c"
-    "${GUMBO_PARSER}/utf8.c"
-    "${GUMBO_PARSER}/util.c"
-    "${GUMBO_PARSER}/vector.c"
+    "lib/gumbo-parser/attribute.c"
+    "lib/gumbo-parser/char_ref.c"
+    "lib/gumbo-parser/error.c"
+    "lib/gumbo-parser/parser.c"
+    "lib/gumbo-parser/string_buffer.c"
+    "lib/gumbo-parser/string_piece.c"
+    "lib/gumbo-parser/tag.c"
+    "lib/gumbo-parser/tokenizer.c"
+    "lib/gumbo-parser/utf8.c"
+    "lib/gumbo-parser/util.c"
+    "lib/gumbo-parser/vector.c"
 )
 
 add_library( gumbo STATIC ${GUMBO_PARSER_SRC})
+#link_directories( ${LIB}/ ${GUMBO_PARSER}/)
 
-link_directories( ${LIB}/ ${GUMBO_PARSER}/)
-
-#compile all *.cpp source files under src folder
-file ( GLOB SOURCES "./*.cpp" "./src/*.cpp")
+target_include_directories( gumbo PUBLIC ${GUMBO_PARSER})
 
 add_executable( mhdTrader main.cpp)
-target_link_libraries ( mhdTrader ${PROJECT_LINK_LIBS} Threads::Threads ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto ${GUMBO_PARSER_SRC})
+target_link_libraries ( mhdTrader ${PROJECT_LINK_LIBS} Threads::Threads ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto gumbo)
