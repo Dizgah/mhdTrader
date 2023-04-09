@@ -18,6 +18,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/ostreamwrapper.h>
 
+#include "gumbo.h"
 
 #define URI                             "wss://ws.binaryws.com/websockets/v3?app_id=1089"
 #define DEFAULT_WAIT_TIME               60
@@ -343,6 +344,10 @@ int main(int argc, char* argv[])
     std::string                 uri = URI;
     std::unique_ptr<WsHandler>  ws(new WsHandler);
 
+
+    GumboOutput* output = gumbo_parse("<h1>Hello, World!</h1>");
+    // Do stuff with output->root
+    gumbo_destroy_output(&kGumboDefaultOptions, output);
 
     try
     {
