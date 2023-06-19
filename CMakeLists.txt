@@ -20,6 +20,9 @@ set( Boost_USE_STATIC_LIBS ON)
 SET( Boost_USE_MULTITHREAD ON)
 find_package( Boost REQUIRED system thread)
 
+find_package(CURL REQUIRED)
+include_directories(${CURL_INCLUDE_DIR})
+
 include_directories( ${PROJECT_DIR}/)
 include_directories( ${INC}/)
 include_directories( ${LIB}/)
@@ -49,4 +52,4 @@ add_library( gumbo STATIC ${GUMBO_PARSER_SRC})
 target_include_directories( gumbo PUBLIC ${GUMBO_PARSER})
 
 add_executable( mhdTrader main.cpp)
-target_link_libraries ( mhdTrader ${PROJECT_LINK_LIBS} Threads::Threads ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto gumbo)
+target_link_libraries ( mhdTrader ${PROJECT_LINK_LIBS} Threads::Threads ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto ${CURL_LIBRARIES} gumbo)

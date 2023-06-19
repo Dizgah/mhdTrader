@@ -18,6 +18,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/ostreamwrapper.h>
 
+#include <curl/curl.h>
 #include "gumbo.h"
 
 #define URI                             "wss://ws.binaryws.com/websockets/v3?app_id=1089"
@@ -344,6 +345,44 @@ int main(int argc, char* argv[])
     GumboOutput* output = gumbo_parse("<h1>Hello, World!</h1>");
     // Do stuff with output->root
     gumbo_destroy_output(&kGumboDefaultOptions, output);
+
+
+    CURL *curl;
+    FILE *fp;
+    CURLcode res;
+    char *url = "https://cdn.ime.co.ir";
+    char outfilename[FILENAME_MAX] = "page.html";
+    curl = curl_easy_init();
+    if (curl)
+    {
+        fp = fopen(outfilename,"wb");
+        curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, NULL);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+        fclose(fp);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     std::string                 uri = URI;
     std::unique_ptr<WsHandler>  ws(new WsHandler);
