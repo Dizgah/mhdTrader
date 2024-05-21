@@ -1,0 +1,22 @@
+#include "postMan.h"
+
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include<chrono>
+#include<thread>
+#include <vector>
+#include <string>
+#include <queue>
+#include <list>
+#include <memory>
+
+PostMan::PostMan()
+{
+
+}
+
+PostMan::~PostMan()
+{
+
+}

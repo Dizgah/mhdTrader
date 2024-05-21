@@ -11,7 +11,7 @@ set( SRC ${PROJECT_DIR}/src)
 set( LIB ${PROJECT_DIR}/lib)
 set( WEBSOCKETPP ${LIB}/websocketpp)
 set( RAPIDJSON ${LIB}/rapidjson)
-set( GUMBO_PARSER ${LIB}/gumbo-parser)
+#set( GUMBO_PARSER ${LIB}/gumbo-parser)
 
 find_package( OpenSSL REQUIRED)
 find_package( Threads)
@@ -28,28 +28,42 @@ include_directories( ${INC}/)
 include_directories( ${LIB}/)
 include_directories( ${WEBSOCKETPP}/)
 include_directories( ${RAPIDJSON}/)
-include_directories( ${GUMBO_PARSER}/)
 include_directories( ${Boost_INCLUDE_DIR})
 include_directories( ${OPENSSL_INCLUDE_DIR})
+#include_directories( ${GUMBO_PARSER}/)
 
-set( GUMBO_PARSER_SRC
-    "lib/gumbo-parser/attribute.c"
-    "lib/gumbo-parser/char_ref.c"
-    "lib/gumbo-parser/error.c"
-    "lib/gumbo-parser/parser.c"
-    "lib/gumbo-parser/string_buffer.c"
-    "lib/gumbo-parser/string_piece.c"
-    "lib/gumbo-parser/tag.c"
-    "lib/gumbo-parser/tokenizer.c"
-    "lib/gumbo-parser/utf8.c"
-    "lib/gumbo-parser/util.c"
-    "lib/gumbo-parser/vector.c"
-)
+#set( GUMBO_PARSER_SRC
+#    "lib/gumbo-parser/attribute.c"
+#    "lib/gumbo-parser/char_ref.c"
+#    "lib/gumbo-parser/error.c"
+#    "lib/gumbo-parser/parser.c"
+#    "lib/gumbo-parser/string_buffer.c"
+#    "lib/gumbo-parser/string_piece.c"
+#    "lib/gumbo-parser/tag.c"
+#    "lib/gumbo-parser/tokenizer.c"
+#    "lib/gumbo-parser/utf8.c"
+#    "lib/gumbo-parser/util.c"
+#    "lib/gumbo-parser/vector.c"
+#)
 
-add_library( gumbo STATIC ${GUMBO_PARSER_SRC})
-#link_directories( ${LIB}/ ${GUMBO_PARSER}/)
+#add_library( gumbo STATIC ${GUMBO_PARSER_SRC})
+##link_directories( ${LIB}/ ${GUMBO_PARSER}/)
 
-target_include_directories( gumbo PUBLIC ${GUMBO_PARSER})
+#target_include_directories( gumbo PUBLIC ${GUMBO_PARSER})
 
-add_executable( mhdTrader main.cpp)
-target_link_libraries ( mhdTrader ${PROJECT_LINK_LIBS} Threads::Threads ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto ${CURL_LIBRARIES} gumbo)
+set(    SOURCES
+        ${SRC}/connection.cpp
+        ${SRC}/restManager.cpp
+        ${SRC}/websocketManager.cpp
+        ${SRC}/postMan.cpp
+
+        ${INC}/definition.h
+        ${INC}/connection.h
+        ${INC}/restManager.h
+        ${INC}/websocketManager.h
+        ${INC}/postMan.h
+    )
+
+add_executable( mhdTrader main.cpp ${SOURCES})
+#target_link_libraries ( mhdTrader ${PROJECT_LINK_LIBS} Threads::Threads ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto ${CURL_LIBRARIES} gumbo)
+target_link_libraries ( mhdTrader ${PROJECT_LINK_LIBS} Threads::Threads ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto ${CURL_LIBRARIES})
